@@ -4,7 +4,7 @@
 Sign-up for a new developer account and create a new Unity app [here](http://www.rapidoreach.com) and copy your API Key.
 
 ### Download the Plugin
-Download the latest version of the RapidoReach Unity Plugin [here](https://github.com/rapidoreach/RapidoreachUnitySDK/blob/005aa266abf698f99002868e6b20c234fad0642e/RapidoreachUnitySDK.unitypackage).
+Download the latest version of the RapidoReach Unity Plugin [here](https://github.com/rapidoreach/RapidoreachUnitySDK/blob/master/RapidoreachUnitySDK.unitypackage).
 
 ### Import the Unity Package
 From Unity go to Assets menu → Import package → Custom package → choose the unzipped unity package.
