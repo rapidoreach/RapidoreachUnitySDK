@@ -29,7 +29,7 @@ We recommend initializing RapidoReach as soon as possible so we can begin prepar
     public void ConfigureRapidoReach()
   {
 #if UNITY_IOS || UNITY_ANDROID
-    RapidoReach.Initialize("d5ece53df8ac97409298325fec81f3f7", "ANDROID_TEST_ID");
+    RapidoReach.Initialize("<YOUR_API_TOKEN>", "<YOUR_USER_ID>");
     RapidoReach.SetListener(gameObject.name);
 
     // optional
