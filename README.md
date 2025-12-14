@@ -1,206 +1,181 @@
-# RapidoReach Unity Integration Guide
+# RapidoReach Unity SDK
 
-### Get Your API Key
-Sign-up for a new developer account and create a new Unity app [here](http://www.rapidoreach.com) and copy your API Key.
+Rewarded survey offerwall SDK for Unity. Show the RapidoReach offerwall, receive reward and lifecycle events, and customize the in-SDK navigation UI.
 
-### Download the Plugin
-Download the latest version of the RapidoReach Unity Plugin [here](https://github.com/rapidoreach/RapidoreachUnitySDK/blob/master/RapidoreachUnitySDK.unitypackage).
+## Get an API key
 
-### Import the Unity Package
-From Unity go to Assets menu → Import package → Custom package → choose the unzipped unity package.
+Create an app in the RapidoReach dashboard and copy your API key.
 
-### Android
-Ensure the RapidoReach-1.0.0.aar and other files were successfully imported with the `RapidoReach.cs` file in your "Assets/Plugins" folder.
+## Requirements
 
-In your player settings ensure the minimum API is set to 15 (Jelly Bean) or higher.
+- Unity: works with the Unity Editor, but the offerwall only runs on device (Android/iOS).
+- Android: minSdk `23` (the bundled `RapidoReach-1.0.2.aar` requires it).
+- iOS: minimum deployment target `12.0` (bundled `RapidoReach.xcframework`).
 
-### Initialize RapidoReach
-We recommend initializing RapidoReach as soon as possible so we can begin preparing surveys for the user. In the Initialize method you'll set your API key and the user's ID that will be passed back into your server side callback when the user has earned currency for completing a survey.
+## Install
+
+1) Download the latest `RapidoreachUnitySDK.unitypackage` from GitHub Releases:
+`https://github.com/rapidoreach/RapidoreachUnitySDK/releases/latest`
+
+2) Import into Unity:
+- `Assets` → `Import Package` → `Custom Package...` → select `RapidoreachUnitySDK.unitypackage`
+
+3) Verify the plugin files exist after import:
+- `Assets/Plugins/RapidoReach.cs`
+- Android: `Assets/Plugins/Android/RapidoReach-1.0.2.aar`
+- iOS: `Assets/Plugins/iOS/RapidoReach/Source/RapidoReach.xcframework`
+
+## Quick start
+
+Create a GameObject (for example, `RapidoReachManager`) and attach a script like this:
 
 ```csharp
-  #if UNITY_ANDROID || UNITY_IOS
+using UnityEngine;
 
-  // Your GameObject that triggers the Reward Center
+public class RapidoReachManager : MonoBehaviour
+{
+    [SerializeField] private string apiKey = "YOUR_API_TOKEN";
+    [SerializeField] private string userId = "YOUR_USER_ID";
 
-  void Start()
-  {
-    ConfigureRapidoReach();
-  }
-    public void ConfigureRapidoReach()
-  {
-#if UNITY_IOS || UNITY_ANDROID
-    RapidoReach.Initialize("<YOUR_API_TOKEN>", "<YOUR_USER_ID>");
-    RapidoReach.SetListener(gameObject.name);
+    private void Start()
+    {
+#if UNITY_ANDROID || UNITY_IOS
+        // Optional: configure staging/regional backend before init.
+        // RapidoReach.UpdateBackend("https://your-backend.example", null);
 
-    // optional
-    RapidoReach.SetNavigationBarText("RapidoReach Unity N");
-    RapidoReach.SetNavigationBarColor("#211548");
-    RapidoReach.SetNavigationBarTextColor("#FFFFFF");
+        RapidoReach.Initialize(apiKey, userId);
+
+        // Required to receive callbacks (OnReward / OnRewardCenterOpened / etc).
+        RapidoReach.SetListener(gameObject.name);
+
+        // Optional UI customization.
+        RapidoReach.SetNavigationBarText(Application.productName);
+        RapidoReach.SetNavigationBarColor("#211548");
+        RapidoReach.SetNavigationBarTextColor("#FFFFFF");
+#else
+        Debug.Log("RapidoReach: supported on Android/iOS only (build & run on device).");
 #endif
-  }
+    }
 
-  // call this function to show reward center on button click etc
-  public void showRewardCenter(){
-    Debug.Log("UNITY: Calling show reward center");
-#if UNITY_IOS || UNITY_ANDROID
-    RapidoReach.ShowRewardCenter();
+    public void ShowOfferwall()
+    {
+#if UNITY_ANDROID || UNITY_IOS
+        RapidoReach.ShowRewardCenter();
 #endif
-  }
+    }
 
-  void OnReward(string quantity)
-  {
-    FindObjectOfType<ReceivedRewards>().GetComponent<Text>().text = quantity;
-    Debug.Log("RapidoReach OnReward: " + quantity);
-  }
+    // --- Callbacks (UnitySendMessage) ---
 
-  void OnRewardCenterOpened()
-  {
-    FindObjectOfType<ReceivedRewards>().GetComponent<Text>().text = "Loading ...";
-    Debug.Log("RapidoReach OnRewardCenterOpened!");
-  }
+    private void OnReward(string quantity)
+    {
+        Debug.Log($"RapidoReach OnReward: {quantity}");
+    }
 
-  void OnRewardCenterClosed()
-  {
-    Debug.Log("RapidoReach OnRewardCenterClosed!");
-  }
+    private void OnRewardCenterOpened()
+    {
+        Debug.Log("RapidoReach OnRewardCenterOpened");
+    }
 
-  void RapidoReachSurveyAvailable(string available)
-  {
-    Debug.Log("RapidoReach RapidoReachSurveyAvailable: " + available);
-  }
+    private void OnRewardCenterClosed()
+    {
+        Debug.Log("RapidoReach OnRewardCenterClosed");
+    }
 
-  #endif 
+    private void RapidoReachSurveyAvailable(string available)
+    {
+        // "true" / "false"
+        Debug.Log($"RapidoReach SurveyAvailable: {available}");
+    }
+}
 ```
-      
-### Google Play Services
-A Google Advertising ID helps us serve offers and surveys so we recommend adding Google Play Services to your project. We provide the files to pull this in for you.
 
-### iOS
-Ensure the `UnityPluginBridge.mm` and `RapidoReachSDK-Bridging-Header.h` files and frameworks folder are in your "Assets/Plugins/iOS" folder and the `RapidoReach.cs` file is in your "Assets/Plugins" folder.
+## Reward attribution (recommended)
 
+For production reward attribution, use server-to-server callbacks whenever possible.
+The `userId` you pass to `RapidoReach.Initialize(apiKey, userId)` is returned in the server callback so you can credit the correct user.
 
-### Initialize RapidoReach
-We recommend initializing RapidoReach as soon as possible so we can begin preparing surveys for the user. In the Initialize method you'll set your API key and the user's ID that will be passed back into your server side callback when the user has earned currency for completing a survey.
+## Unity API reference
+
+All APIs live on the static `RapidoReach` class inside `Assets/Plugins/RapidoReach.cs`.
+
+### Offerwall
+
+- `RapidoReach.ShowRewardCenter()`: shows the offerwall.
+- `RapidoReach.ShowRewardCenter(string placementId)`: Android supports `placementId`; iOS ignores the placement and shows the default offerwall.
+- `RapidoReach.IsSurveyAvailable()`: returns whether surveys are available (based on latest SDK state).
+
+### User identity
+
+If your user logs in/out, update the user identifier:
 
 ```csharp
-  #if UNITY_ANDROID || UNITY_IOS
-
-  // Your GameObject that triggers the Reward Center
-
-  void Start()
-  {
-    ConfigureRapidoReach();
-  }
-    public void ConfigureRapidoReach()
-  {
-#if UNITY_IOS || UNITY_ANDROID
-    RapidoReach.Initialize("d5ece53df8ac97409298325fec81f3f7", "ANDROID_TEST_ID");
-    RapidoReach.SetListener(gameObject.name);
-
-    // optional
-    RapidoReach.SetNavigationBarText("RapidoReach Unity N");
-    RapidoReach.SetNavigationBarColor("#211548");
-    RapidoReach.SetNavigationBarTextColor("#FFFFFF");
-#endif
-  }
-
-  // call this function to show reward center on button click etc
-  public void showRewardCenter(){
-    Debug.Log("UNITY: Calling show reward center");
-#if UNITY_IOS || UNITY_ANDROID
-    RapidoReach.ShowRewardCenter();
-#endif
-  }
-
-  void OnReward(string quantity)
-  {
-    FindObjectOfType<ReceivedRewards>().GetComponent<Text>().text = quantity;
-    Debug.Log("RapidoReach OnReward: " + quantity);
-  }
-
-  void OnRewardCenterOpened()
-  {
-    FindObjectOfType<ReceivedRewards>().GetComponent<Text>().text = "Loading ...";
-    Debug.Log("RapidoReach OnRewardCenterOpened!");
-  }
-
-  void OnRewardCenterClosed()
-  {
-    Debug.Log("RapidoReach OnRewardCenterClosed!");
-  }
-
-  void RapidoReachSurveyAvailable(string available)
-  {
-    Debug.Log("RapidoReach RapidoReachSurveyAvailable: " + available);
-  }
-
-  #endif 
+RapidoReach.SetUserIdentifier("NEW_USER_ID");
 ```
-      
-### Libraries
-We include a post processing script to automatically include all libraries into your project and perform any additional configuration in the build settings. See the [iOS guide](iossdk.md) if you would like to verify your Xcode project setup.
-      
-### Reward Callback
-To ensure safety and privacy, we notify you of all awards via a server side callback. This callback will be triggered for both Android and iOS apps.
 
-In the developer dashboard for your App add the server callback that we should call to notify you when a user has completed an offer. Note the user ID pass into the initialize call will be returned to you in the server side callback. More information about setting up the callback can be found in the developer dashboard.
+Notes:
+- On iOS, `SetUserIdentifier` updates the stored user id, but you should re-run `RapidoReach.Initialize(apiKey, userId)` to refresh state.
 
-The quantity value will automatically be converted to your virtual currency based on the exchange rate you specified in your app. Currency is always rounded in favor of the app user to improve happiness and engagement.
+### Backends / environments
 
-### Client Side Award Callback
-For security purposes we always recommend that developers utilize a server side callback, however we also provide APIs for implementing a client side award notification if you lack the server structure or a server altogether or want more real-time award notification. It's important to only award the user once if you use both server and client callbacks (though your users may not be opposed!).
-
-In order to receive notifications you must implement the `OnReward` method on the GameObject you'd like to receive notifications that a user earned content. Then you must register that gameObject with the `SetListener` method.
-
-Additionally you can also implement `OnRewardCenterOpened` and `OnRewardCenterClosed` to listen to events and `RapidoReachSurveyAvailable` to listen to when a survey is available.
+If you use staging/regional backends:
 
 ```csharp
-  #if UNITY_ANDROID || UNITY_IOS
-
-  // Your GameObject that triggers the Reward Center
-
-  void Start()
-  {
-    ConfigureRapidoReach();
-  }
-    public void ConfigureRapidoReach()
-  {
-#if UNITY_IOS || UNITY_ANDROID
-    RapidoReach.Initialize("d5ece53df8ac97409298325fec81f3f7", "ANDROID_TEST_ID");
-    RapidoReach.SetListener(gameObject.name);
-
-    // optional
-    RapidoReach.SetNavigationBarText("RapidoReach Unity N");
-    RapidoReach.SetNavigationBarColor("#211548");
-    RapidoReach.SetNavigationBarTextColor("#FFFFFF");
-#endif
-  }
-
-  // call this function to show reward center on button click etc
-  public void showRewardCenter(){
-    Debug.Log("UNITY: Calling show reward center");
-#if UNITY_IOS || UNITY_ANDROID
-    RapidoReach.ShowRewardCenter();
-#endif
-  }
-
-  void OnReward(string quantity)
-  {
-    FindObjectOfType<ReceivedRewards>().GetComponent<Text>().text = quantity;
-    Debug.Log("RapidoReach OnReward: " + quantity);
-  }
-
-  #endif 
+RapidoReach.Initialize(apiKey, userId);
 ```
-      
-### Testing SDK
-When you initially create your app we automatically set your app to Test mode. While in test mode a survey will always be available. Note - be sure to set your app to Live in your dashboardt before your app goes live or you won't serve any real surveys to your users!
 
-### Customizing SDK
-We provide several methods to customize the navigation bar to feel like your app.
+Notes:
+- Android currently ignores `rewardHashSalt` (parameter is present for parity); iOS forwards it to the native SDK.
+
+### Customizing SDK options (navigation UI)
 
 ```csharp
-  RapidoReach.SetNavigationBarText("RapidoReach Unity N");
-  RapidoReach.SetNavigationBarColor("#211548");
-  RapidoReach.SetNavigationBarTextColor("#FFFFFF");
-```      
+RapidoReach.SetNavigationBarText("Earn Rewards");
+RapidoReach.SetNavigationBarColor("#211548");
+RapidoReach.SetNavigationBarTextColor("#FFFFFF");
+```
+
+Android-only (iOS no-ops in this Unity wrapper):
+
+```csharp
+RapidoReach.SetOverrideCloseButtonURL("https://example.com/close.png");
+RapidoReach.SetOverrideRefreshButtonURL("https://example.com/refresh.png");
+```
+
+### Moments (Android only)
+
+The Unity wrapper supports Moments on Android:
+
+```csharp
+RapidoReach.EnableMoments(true);
+RapidoReach.ShowMomentSurvey();
+```
+
+Notes:
+- iOS Moments are not supported by this Unity wrapper (these calls are no-ops on iOS).
+
+### Profiling/testing helpers
+
+```csharp
+bool profiled = RapidoReach.IsProfiled();  // Android only; iOS always returns false in this wrapper
+RapidoReach.ResetProfiler(true);           // Android only; iOS no-op
+```
+
+## Android lifecycle (recommended)
+
+Some apps prefer to explicitly forward lifecycle:
+
+```csharp
+private void OnApplicationPause(bool paused)
+{
+#if UNITY_ANDROID
+    if (paused) RapidoReach.OnPause();
+    else RapidoReach.OnResume();
+#endif
+}
+```
+
+## Troubleshooting
+
+- No callbacks firing: call `RapidoReach.SetListener(gameObject.name)` and ensure the GameObject is active and not destroyed.
+- Unity Editor: offerwall won’t open in Editor; use `Build And Run` on Android/iOS.
+- Android build errors: ensure your project minSdk is `23` or higher.
