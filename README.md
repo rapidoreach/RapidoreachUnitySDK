@@ -9,7 +9,7 @@ Create an app in the RapidoReach dashboard and copy your API key.
 ## Requirements
 
 - Unity: works with the Unity Editor, but the offerwall only runs on device (Android/iOS).
-- Android: minSdk `23` (the bundled `RapidoReach-1.0.2.aar` requires it).
+- Android: minSdk `23` (the bundled `RapidoReach-1.1.0.aar` requires it).
 - iOS: minimum deployment target `12.0` (bundled `RapidoReach.xcframework`).
 
 ## Install
@@ -22,7 +22,7 @@ Create an app in the RapidoReach dashboard and copy your API key.
 
 3) Verify the plugin files exist after import:
 - `Assets/Plugins/RapidoReach.cs`
-- Android: `Assets/Plugins/Android/RapidoReach-1.0.2.aar`
+- Android: `Assets/Plugins/Android/RapidoReach-1.1.0.aar`
 - iOS: `Assets/Plugins/iOS/RapidoReach/Source/RapidoReach.xcframework`
 
 ## Quick start
