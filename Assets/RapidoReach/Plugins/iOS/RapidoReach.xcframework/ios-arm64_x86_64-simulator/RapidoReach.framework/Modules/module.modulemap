@@ -1,0 +1,11 @@
+framework module RapidoReach {
+  umbrella header "RapidoReach-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module RapidoReach.Swift {
+  header "RapidoReach-Swift.h"
+  requires objc
+}
