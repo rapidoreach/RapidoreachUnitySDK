@@ -1,0 +1,6 @@
+{
+  "name": "RapidoReach.EditorTests",
+  "references": ["RapidoReach.Runtime"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "includePlatforms": ["Editor"]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "RapidoReach.Runtime",
+  "rootNamespace": "RapidoReach.Unity",
+  "autoReferenced": true
+}

@@ -1,0 +1,610 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.2.1 effective-5.10 (swiftlang-6.2.1.4.8 clang-1700.4.4.1)
+// swift-module-flags: -target arm64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name RapidoReach
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.1
+import AdSupport
+import AppTrackingTransparency
+import Combine
+import CoreTelephony
+import Foundation
+@_exported import RapidoReach
+import Swift
+import SwiftUI
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public struct AnyDecodable : Swift.Decodable {
+  public let value: Any
+  public init(from decoder: any Swift.Decoder) throws
+}
+@objc public class RapidoReach : ObjectiveC.NSObject {
+  @objc public static let shared: RapidoReach.RapidoReach
+  public static var debug: Swift.Bool
+  weak public var delegate: (any RapidoReach.RapidoReachDelegate)?
+  weak public var sdkDelegate: (any RapidoReach.RapidoReachSDKDelegate)?
+  weak public var rewardDelegate: (any RapidoReach.RapidoReachRewardDelegate)?
+  weak public var contentDelegate: (any RapidoReach.RapidoReachContentDelegate)?
+  weak public var quickQuestionDelegate: (any RapidoReach.RapidoReachQuickQuestionDelegate)?
+  weak public var surveysDelegate: (any RapidoReach.RapidoReachSurveysDelegate)?
+  public var resetProfiler: Swift.Bool
+  public var isReady: Swift.Bool {
+    get
+  }
+  public var rewardCallbackFunc: (_ arg: Swift.Int) -> Swift.Void
+  public var rewardCenterClosedCallbackFunc: () -> Swift.Void
+  public var rewardCenterOpenedCallbackFunc: () -> Swift.Void
+  public var surveysAvailableCallbackFunc: (_ arg: Swift.Bool) -> Swift.Void
+  public init(deviceIDProvider: any RapidoReach.RapidoReachDeviceInfoProvider = RapidoReachDeviceInfo())
+  @objc public func configure(apiKey: Swift.String, user: Swift.String)
+  @objc public func setUserIdentifier(_ user: Swift.String)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public func updateBackend(baseURL: Foundation.URL, rewardHashSalt: Swift.String? = nil)
+  #endif
+  @objc public func setNavigationBarColor(_ hexColor: Swift.String)
+  @objc public func setNavigationBarColor(for hexColor: Swift.String)
+  @objc public func setNavigationBarTextColor(_ hexColor: Swift.String)
+  @objc public func setNavigationBarTextColor(for hexColor: Swift.String)
+  @objc public func setNavigationBarText(for text: Swift.String)
+  @objc deinit
+}
+extension RapidoReach.RapidoReach {
+  @objc dynamic public func setRewardCallback(rewardCallback: @escaping (_ reward: Swift.Int) -> Swift.Void)
+  @objc dynamic public func setrewardCenterClosedCallback(rewardCallback: @escaping () -> Swift.Void)
+  @objc dynamic public func setrewardCenterOpenedCallback(rewardCallback: @escaping () -> Swift.Void)
+  @objc dynamic public func setsurveysAvailableCallback(surveyAvailableCallback: @escaping (_ available: Swift.Bool) -> Swift.Void)
+  @objc dynamic public func fetchAppUserID()
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc dynamic public func fetchRewards(for userID: Swift.String? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc dynamic public func presentSurvey(_ presenter: UIKit.UIViewController? = nil, title: Swift.String = "", customParameters: [Swift.String : Any]? = nil, completion: (() -> Swift.Void)? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc dynamic public func presentOfferwall(from presenter: UIKit.UIViewController? = nil, title: Swift.String = "", customParameters: [Swift.String : Any]? = nil, completion: (() -> Swift.Void)? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc dynamic public func reportAbandon(for userID: Swift.String? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc dynamic public func sendUserAttributes(_ attributes: [Swift.String : Any], clearPrevious: Swift.Bool = false, completion: (((any Swift.Error)?) -> Swift.Void)? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func getPlacementDetails(tag: Swift.String, completion: @escaping (Swift.Result<[Swift.String : Any], any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func canShowContent(tag: Swift.String, completion: @escaping (Swift.Result<Swift.Bool, any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func listSurveys(tag: Swift.String, completion: @escaping (Swift.Result<[[Swift.String : Any]], any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func canShowSurvey(surveyId: Swift.String, tag: Swift.String, completion: @escaping (Swift.Result<Swift.Bool, any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func hasSurveys(tag: Swift.String, completion: @escaping (Swift.Result<Swift.Bool, any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func showSurvey(surveyId: Swift.String, tag: Swift.String, customParameters: [Swift.String : Any]? = nil, completion: @escaping (Swift.Result<Foundation.URL, any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func hasQuickQuestions(tag: Swift.String, completion: @escaping (Swift.Result<Swift.Bool, any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func fetchQuickQuestions(tag: Swift.String, completion: @escaping (Swift.Result<[Swift.String : Any], any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func answerQuickQuestion(id: Swift.String, placement: Swift.String, answer: Any, completion: @escaping (Swift.Result<[Swift.String : Any], any Swift.Error>) -> Swift.Void)
+  #endif
+}
+final public class RapidoReachConfiguration {
+  public static var shared: RapidoReach.RapidoReachConfiguration
+  final public var baseURL: Foundation.URL
+  final public var isTestMode: Swift.Bool {
+    get
+  }
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init(baseURL: Foundation.URL? = nil, rewardHashSalt: Swift.String? = nil)
+  #endif
+  @objc final public func update(baseURL: Foundation.URL)
+  @available(*, deprecated, message: "Client reward signing is retired; use RapidoReachV2 reward status.")
+  @objc final public func update(rewardHashSalt: Swift.String)
+  @objc deinit
+}
+public enum RapidoReachError : Swift.Error {
+  case generic(any Swift.Error)
+  case unknown
+  case customerr(Swift.String)
+  case coded(code: RapidoReach.RapidoReachErrorCode, message: Swift.String?)
+  case ErrorList([Swift.String])
+}
+public enum RapidoReachErrorCode : Swift.String {
+  case sdkNotReady
+  case placementNotReady
+  case backendUnavailable
+  case notSupported
+  case invalidParams
+  case notFound
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.String)
+  #endif
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct RapidoReachRewardPayload : Swift.Decodable {
+  public let transactionIdentifier: Swift.String?
+  public let placementIdentifier: Swift.String?
+  public let placementTag: Swift.String?
+  public let currencyName: Swift.String?
+  public let rewardAmount: Swift.Double
+  public let saleMultiplier: Swift.Double?
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension RapidoReach.RapidoReachError : Foundation.LocalizedError {
+  #if compiler(>=5.3) && $NonescapableTypes
+  public var errorDescription: Swift.String? {
+    get
+  }
+  #endif
+}
+extension RapidoReach.RapidoReachError {
+  #if compiler(>=5.3) && $NonescapableTypes
+  public var code: RapidoReach.RapidoReachErrorCode? {
+    get
+  }
+  #endif
+}
+public protocol RapidoReachDeviceInfoProvider {
+  var deviceID: Swift.String { get }
+  var osVersion: Swift.String { get }
+  var appDevice: Swift.String { get }
+  #if compiler(>=5.3) && $NonescapableTypes
+  var carrier: Swift.String? { get }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  var locale: Swift.String? { get }
+  #endif
+}
+public protocol RapidoReachDelegate : AnyObject {
+  func didGetUser(_ user: RapidoReach.RapidoReachUser)
+  func didGetRewards(_ reward: RapidoReach.RapidoReachReward)
+  func didGetError(_ error: RapidoReach.RapidoReachError)
+  func didOpenRewardCenter()
+  func didClosedRewardCenter()
+  func didSurveyAvailable(_ available: Swift.Bool)
+}
+extension RapidoReach.RapidoReachDelegate {
+  public func didGetUser(_ user: RapidoReach.RapidoReachUser)
+  public func didGetRewards(_ reward: RapidoReach.RapidoReachReward)
+  public func didGetError(_ error: RapidoReach.RapidoReachError)
+  public func didOpenRewardCenter()
+  public func didClosedRewardCenter()
+  public func didSurveyAvailable(_ available: Swift.Bool)
+}
+public protocol RapidoReachSDKDelegate : AnyObject {
+  func onSDKReady()
+  func onSDKError(_ error: RapidoReach.RapidoReachError)
+}
+extension RapidoReach.RapidoReachSDKDelegate {
+  public func onSDKReady()
+  public func onSDKError(_ error: RapidoReach.RapidoReachError)
+}
+public protocol RapidoReachRewardDelegate : AnyObject {
+  func onRewards(_ rewards: [RapidoReach.RapidoReachRewardPayload])
+}
+extension RapidoReach.RapidoReachRewardDelegate {
+  public func onRewards(_ rewards: [RapidoReach.RapidoReachRewardPayload])
+}
+public protocol RapidoReachContentDelegate : AnyObject {
+  func onContentShown(forPlacement placement: Swift.String)
+  func onContentDismissed(forPlacement placement: Swift.String)
+}
+extension RapidoReach.RapidoReachContentDelegate {
+  public func onContentShown(forPlacement placement: Swift.String)
+  public func onContentDismissed(forPlacement placement: Swift.String)
+}
+public struct RapidoReachQuickQuestionPayload : Swift.Decodable {
+  public let id: Swift.String
+  public let questions: [Swift.String : RapidoReach.AnyDecodable]
+  public init(from decoder: any Swift.Decoder) throws
+}
+public protocol RapidoReachQuickQuestionDelegate : AnyObject {
+  func onQuickQuestionResponse(_ payload: RapidoReach.RapidoReachQuickQuestionPayload)
+}
+extension RapidoReach.RapidoReachQuickQuestionDelegate {
+  public func onQuickQuestionResponse(_ payload: RapidoReach.RapidoReachQuickQuestionPayload)
+}
+public protocol RapidoReachSurveysDelegate : AnyObject {
+  func onSurveysRefreshed(forPlacement placement: Swift.String)
+}
+extension RapidoReach.RapidoReachSurveysDelegate {
+  public func onSurveysRefreshed(forPlacement placement: Swift.String)
+}
+public class RapidoReachDeviceInfo : RapidoReach.RapidoReachDeviceInfoProvider {
+  public var deviceID: Swift.String {
+    get
+  }
+  #if compiler(>=5.3) && $NonescapableTypes
+  public var carrier: Swift.String? {
+    get
+  }
+  #endif
+  public var osVersion: Swift.String {
+    get
+  }
+  public var appDevice: Swift.String {
+    get
+  }
+  #if compiler(>=5.3) && $NonescapableTypes
+  public var locale: Swift.String? {
+    get
+  }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @available(iOS 14, *)
+  @objc public func requestTrackingPermission(completion: ((AppTrackingTransparency.ATTrackingManager.AuthorizationStatus) -> Swift.Void)? = nil)
+  #endif
+  public init()
+  @objc deinit
+}
+public enum RapidoReachLogLevel : Swift.Int {
+  case error
+  case warn
+  case info
+  case debug
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers final public class RapidoReachLogger {
+  public static let shared: RapidoReach.RapidoReachLogger
+  final public var level: RapidoReach.RapidoReachLogLevel
+  final public var sink: ((RapidoReach.RapidoReachLogLevel, Swift.String) -> Swift.Void)?
+  final public func log(_ message: @autoclosure @escaping () -> Swift.String, level: RapidoReach.RapidoReachLogLevel)
+  @objc deinit
+}
+public struct RapidoReachUser : Swift.Decodable {
+  public let id: Swift.String
+  public let survey_available: Swift.Bool
+  public let profiled: Swift.Bool
+  public let moments_polling_frequency: Swift.Int
+  public let test_user: Swift.Bool?
+  public let callback_mode: Swift.String?
+  public var rewards: RapidoReach.RapidoReachReward?
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct ReplyObject : Swift.Decodable {
+  public let ErrorCode: Swift.String
+  public let Errors: Swift.Array<Swift.String>
+  public let Info: Swift.Array<Swift.String>
+  public let Data: Swift.Array<RapidoReach.RapidoReachUser>
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct fetchRewardsReplyObject : Swift.Decodable {
+  public let ErrorCode: Swift.String
+  public let Errors: Swift.Array<Swift.String>
+  public let Info: Swift.Array<Swift.String>
+  public let Data: Swift.Array<RapidoReach.RapidoReachReward>
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachReward : Swift.Decodable {
+  public let appuser_reward_ids: Swift.String
+  public let total_rewards: Swift.Int
+  public let rewards: [RapidoReach.RapidoReachRewardItem]?
+  public let callback_mode: Swift.String?
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachRewardItem : Swift.Decodable {
+  public let transactionIdentifier: Swift.String?
+  public let placementIdentifier: Swift.String?
+  public let placementTag: Swift.String?
+  public let currencyName: Swift.String?
+  public let rewardAmount: Swift.Double
+  public let saleMultiplier: Swift.Double?
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachSurvey : Swift.Decodable {
+  public let surveyIdentifier: Swift.String
+  public let lengthInMinutes: Swift.Int
+  public let rewardAmount: Swift.Double
+  public let currencyName: Swift.String?
+  public let isHotTile: Swift.Bool
+  public let isSale: Swift.Bool
+  public let saleMultiplier: Swift.Double
+  public let saleEndDate: Swift.String?
+  public let preSaleRewardAmount: Swift.Double
+  public let provider: Swift.String?
+  public init(from decoder: any Swift.Decoder) throws
+}
+@available(iOS 13.0, *)
+final public class RapidoReachReadiness : Foundation.ObservableObject {
+  @Combine.Published @_projectedValueProperty($isReady) final public var isReady: Swift.Bool {
+    get
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    set
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    _modify
+  }
+  final public var $isReady: Combine.Published<Swift.Bool>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  public init(pollInterval: Foundation.TimeInterval = 1.5)
+  @objc deinit
+  @available(iOS 13.0, *)
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+}
+@available(iOS 13.0, *)
+@_Concurrency.MainActor @preconcurrency public struct RapidoReachOfferwallButton : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public var title: Swift.String
+  @_Concurrency.MainActor @preconcurrency public var placement: Swift.String
+  @_Concurrency.MainActor @preconcurrency public var customParams: [Swift.String : Any]?
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency public init(title: Swift.String = "Surveys", placement: Swift.String = "default", customParams: [Swift.String : Any]? = nil)
+  #endif
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  @available(iOS 13.0, *)
+  public typealias Body = @_opaqueReturnTypeOf("$s11RapidoReach0aB15OfferwallButtonV4bodyQrvp", 0) __
+}
+final public class RapidoReachV2 {
+  public static let shared: RapidoReach.RapidoReachV2
+  final public var onEvent: ((RapidoReach.RapidoReachV2Event) -> Swift.Void)?
+  final public var session: RapidoReach.RapidoReachV2Session? {
+    get
+  }
+  public init(baseURL: Foundation.URL = URL(string: "https://rorapps.rapidoreach.com")!, urlSession: Foundation.URLSession = .shared, bundleIdentifier: Swift.String = Bundle.main.bundleIdentifier ?? "unknown.bundle")
+  #if compiler(>=5.3) && $NonescapableTypes
+  final public func initialize(placementId: Swift.String, externalUserId: Swift.String, options: RapidoReach.RapidoReachV2Options = .init(), completion: @escaping (Swift.Result<RapidoReach.RapidoReachV2Session, any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  final public func refreshSession(completion: @escaping (Swift.Result<RapidoReach.RapidoReachV2Session, any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  final public func revokeSession(completion: @escaping (Swift.Result<Swift.Void, any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  final public func getOffers(adSlotId: Swift.String, cursor: Swift.String? = nil, completion: @escaping (Swift.Result<RapidoReach.RapidoReachV2OfferPage, any Swift.Error>) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  final public func getRewardStatus(offerId: Swift.String, completion: @escaping (Swift.Result<RapidoReach.RapidoReachV2RewardStatus, any Swift.Error>) -> Swift.Void)
+  #endif
+  final public func hostedOfferwallURL() throws -> Foundation.URL
+  final public func isRewardedVideoAvailable(adSlotId: Swift.String) -> Swift.Bool
+  final public func hostedRewardedVideoURL(adSlotId: Swift.String) throws -> Foundation.URL
+  #if compiler(>=5.3) && $NonescapableTypes
+  final public func presentOfferwall(from presenter: UIKit.UIViewController? = nil, completion: (() -> Swift.Void)? = nil) throws
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  final public func presentRewardedVideo(adSlotId: Swift.String, from presenter: UIKit.UIViewController? = nil, completion: (() -> Swift.Void)? = nil) throws
+  #endif
+  final public func destroy()
+  @objc deinit
+}
+public let rapidoReachContractVersion: Swift.String
+public let rapidoReachSDKVersion: Swift.String
+public struct RapidoReachV2Environment : Swift.Codable, Swift.Equatable {
+  public let rawValue: Swift.String
+  public static let sandbox: RapidoReach.RapidoReachV2Environment
+  public static let development: RapidoReach.RapidoReachV2Environment
+  public static let production: RapidoReach.RapidoReachV2Environment
+  public init(rawValue: Swift.String)
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public static func == (a: RapidoReach.RapidoReachV2Environment, b: RapidoReach.RapidoReachV2Environment) -> Swift.Bool
+}
+public struct RapidoReachV2Consent : Swift.Codable, Swift.Equatable {
+  public let rawValue: Swift.String
+  public static let granted: RapidoReach.RapidoReachV2Consent
+  public static let denied: RapidoReach.RapidoReachV2Consent
+  public static let unknown: RapidoReach.RapidoReachV2Consent
+  public static let notRequired: RapidoReach.RapidoReachV2Consent
+  public init(rawValue: Swift.String)
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public static func == (a: RapidoReach.RapidoReachV2Consent, b: RapidoReach.RapidoReachV2Consent) -> Swift.Bool
+}
+public struct RapidoReachV2ATTStatus : Swift.Codable, Swift.Equatable {
+  public let rawValue: Swift.String
+  public static let authorized: RapidoReach.RapidoReachV2ATTStatus
+  public static let denied: RapidoReach.RapidoReachV2ATTStatus
+  public static let restricted: RapidoReach.RapidoReachV2ATTStatus
+  public static let notDetermined: RapidoReach.RapidoReachV2ATTStatus
+  public static let notApplicable: RapidoReach.RapidoReachV2ATTStatus
+  public init(rawValue: Swift.String)
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public static func == (a: RapidoReach.RapidoReachV2ATTStatus, b: RapidoReach.RapidoReachV2ATTStatus) -> Swift.Bool
+}
+public struct RapidoReachV2Options {
+  public var environment: RapidoReach.RapidoReachV2Environment
+  public var language: Swift.String?
+  public var consent: RapidoReach.RapidoReachV2Consent
+  public var attStatus: RapidoReach.RapidoReachV2ATTStatus
+  public var adSlotId: Swift.String?
+  public var customParameters: [Swift.String : Swift.String]
+  public var debug: Swift.Bool
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init(environment: RapidoReach.RapidoReachV2Environment = .production, language: Swift.String? = nil, consent: RapidoReach.RapidoReachV2Consent = .unknown, attStatus: RapidoReach.RapidoReachV2ATTStatus = .notApplicable, adSlotId: Swift.String? = nil, customParameters: [Swift.String : Swift.String] = [:], debug: Swift.Bool = false)
+  #endif
+}
+public struct RapidoReachV2Capabilities : Swift.Codable, Swift.Equatable {
+  public let offerwall: Swift.Bool
+  public let offerApi: Swift.Bool
+  public let rewardStatus: Swift.Bool
+  public let surveywall: Swift.Bool
+  public let rewardedVideo: Swift.Bool
+  public static func == (a: RapidoReach.RapidoReachV2Capabilities, b: RapidoReach.RapidoReachV2Capabilities) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachV2AdSlot : Swift.Codable, Swift.Equatable {
+  public let adSlotId: Swift.String
+  public let name: Swift.String
+  public let type: Swift.String
+  public let available: Swift.Bool
+  public let unavailableReason: Swift.String?
+  public static func == (a: RapidoReach.RapidoReachV2AdSlot, b: RapidoReach.RapidoReachV2AdSlot) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachV2Session : Swift.Codable, Swift.Equatable {
+  public let sessionId: Swift.String
+  public let token: Swift.String
+  public let issuedAt: Swift.String
+  public let expiresAt: Swift.String
+  public let contractVersion: Swift.String
+  public let minimumSdkVersion: Swift.String
+  public let recommendedSdkVersion: Swift.String
+  public let capabilities: RapidoReach.RapidoReachV2Capabilities
+  public let hostedOfferwallUrl: Swift.String?
+  public let hostedRewardedVideoUrl: Swift.String?
+  public let adSlots: [RapidoReach.RapidoReachV2AdSlot]
+  public static func == (a: RapidoReach.RapidoReachV2Session, b: RapidoReach.RapidoReachV2Session) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachV2Reward : Swift.Codable, Swift.Equatable {
+  public let minorUnits: Swift.Int64
+  public let currency: Swift.String
+  public let decimals: Swift.Int
+  public static func == (a: RapidoReach.RapidoReachV2Reward, b: RapidoReach.RapidoReachV2Reward) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachV2Task : Swift.Codable, Swift.Equatable {
+  public let goalId: Swift.String
+  public let title: Swift.String
+  public let state: Swift.String
+  public let required: Swift.Bool
+  public let prerequisiteGoalIds: [Swift.String]?
+  public let deadline: Swift.String?
+  public let reward: RapidoReach.RapidoReachV2Reward
+  public static func == (a: RapidoReach.RapidoReachV2Task, b: RapidoReach.RapidoReachV2Task) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachV2Progress : Swift.Codable, Swift.Equatable {
+  public let state: Swift.String
+  public let tasks: [RapidoReach.RapidoReachV2Task]
+  public let pending: RapidoReach.RapidoReachV2Reward
+  public let earned: RapidoReach.RapidoReachV2Reward
+  public let reversed: RapidoReach.RapidoReachV2Reward
+  public let updatedAt: Swift.String
+  public static func == (a: RapidoReach.RapidoReachV2Progress, b: RapidoReach.RapidoReachV2Progress) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachV2Offer : Swift.Codable, Swift.Equatable {
+  public let offerId: Swift.String
+  public let campaignId: Swift.String
+  public let revisionId: Swift.String
+  public let title: Swift.String
+  public let description: Swift.String
+  public let tasks: [RapidoReach.RapidoReachV2Task]
+  public let totalReward: RapidoReach.RapidoReachV2Reward
+  public let progress: RapidoReach.RapidoReachV2Progress
+  public let expiresAt: Swift.String
+  public static func == (a: RapidoReach.RapidoReachV2Offer, b: RapidoReach.RapidoReachV2Offer) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachV2OfferPage : Swift.Codable, Swift.Equatable {
+  public let items: [RapidoReach.RapidoReachV2Offer]
+  public let nextCursor: Swift.String?
+  public let generatedAt: Swift.String
+  public let expiresAt: Swift.String
+  public let contractVersion: Swift.String
+  public static func == (a: RapidoReach.RapidoReachV2OfferPage, b: RapidoReach.RapidoReachV2OfferPage) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachV2RewardStatus : Swift.Codable, Swift.Equatable {
+  public let offerId: Swift.String
+  public let progress: RapidoReach.RapidoReachV2Progress
+  public let supportEligible: Swift.Bool?
+  public let updatedAt: Swift.String
+  public static func == (a: RapidoReach.RapidoReachV2RewardStatus, b: RapidoReach.RapidoReachV2RewardStatus) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachV2ErrorEnvelope : Swift.Codable, Swift.Equatable, Swift.Error {
+  public let code: Swift.String
+  public let message: Swift.String
+  public let fieldErrors: [Swift.String : Swift.String]
+  public let traceId: Swift.String
+  public let retryable: Swift.Bool
+  public let retryAfterSeconds: Swift.Int?
+  public static func == (a: RapidoReach.RapidoReachV2ErrorEnvelope, b: RapidoReach.RapidoReachV2ErrorEnvelope) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RapidoReachV2EventType : Swift.Codable, Swift.Equatable {
+  public let rawValue: Swift.String
+  public static let ready: RapidoReach.RapidoReachV2EventType
+  public static let availabilityChanged: RapidoReach.RapidoReachV2EventType
+  public static let opened: RapidoReach.RapidoReachV2EventType
+  public static let closed: RapidoReach.RapidoReachV2EventType
+  public static let impressionRecorded: RapidoReach.RapidoReachV2EventType
+  public static let offerClicked: RapidoReach.RapidoReachV2EventType
+  public static let offerStarted: RapidoReach.RapidoReachV2EventType
+  public static let progressChanged: RapidoReach.RapidoReachV2EventType
+  public static let rewardPending: RapidoReach.RapidoReachV2EventType
+  public static let rewardConfirmed: RapidoReach.RapidoReachV2EventType
+  public static let rewardReversed: RapidoReach.RapidoReachV2EventType
+  public static let noFill: RapidoReach.RapidoReachV2EventType
+  public static let rewardedVideoOpened: RapidoReach.RapidoReachV2EventType
+  public static let error: RapidoReach.RapidoReachV2EventType
+  public init(rawValue: Swift.String)
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public static func == (a: RapidoReach.RapidoReachV2EventType, b: RapidoReach.RapidoReachV2EventType) -> Swift.Bool
+}
+public struct RapidoReachV2Event : Swift.Codable, Swift.Equatable {
+  public let type: RapidoReach.RapidoReachV2EventType
+  public let offerId: Swift.String?
+  public let transactionId: Swift.String?
+  public let status: Swift.String?
+  public let reward: RapidoReach.RapidoReachV2Reward?
+  public let error: RapidoReach.RapidoReachV2ErrorEnvelope?
+  public static func == (a: RapidoReach.RapidoReachV2Event, b: RapidoReach.RapidoReachV2Event) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class RapidoReachV2UnityAdapter : ObjectiveC.NSObject {
+  @objc public static let shared: RapidoReach.RapidoReachV2UnityAdapter
+  @objc final public var eventHandler: ((Swift.String) -> Swift.Void)?
+  @objc override convenience dynamic public init()
+  @objc public init(baseURLString: Swift.String)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc final public func initialize(placementId: Swift.String, externalUserId: Swift.String, environment: Swift.String, language: Swift.String?, consent: Swift.String, adSlotId: Swift.String?, completion: @escaping (Swift.String) -> Swift.Void)
+  #endif
+  @objc final public func refreshSession(completion: @escaping (Swift.String) -> Swift.Void)
+  @objc final public func revokeSession(completion: @escaping (Swift.String) -> Swift.Void)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc final public func getOffers(adSlotId: Swift.String, cursor: Swift.String?, completion: @escaping (Swift.String) -> Swift.Void)
+  #endif
+  @objc final public func getRewardStatus(offerId: Swift.String, completion: @escaping (Swift.String) -> Swift.Void)
+  @objc final public func showOfferwall(completion: @escaping (Swift.String) -> Swift.Void)
+  @objc final public func isRewardedVideoAvailable(adSlotId: Swift.String, completion: @escaping (Swift.String) -> Swift.Void)
+  @objc final public func showRewardedVideo(adSlotId: Swift.String, completion: @escaping (Swift.String) -> Swift.Void)
+  @objc final public func destroy()
+  @objc deinit
+}
+extension RapidoReach.RapidoReachErrorCode : Swift.Equatable {}
+extension RapidoReach.RapidoReachErrorCode : Swift.Hashable {}
+extension RapidoReach.RapidoReachErrorCode : Swift.RawRepresentable {}
+extension RapidoReach.RapidoReachLogLevel : Swift.Equatable {}
+extension RapidoReach.RapidoReachLogLevel : Swift.Hashable {}
+extension RapidoReach.RapidoReachLogLevel : Swift.RawRepresentable {}
+@available(iOS 13.0, *)
+extension RapidoReach.RapidoReachOfferwallButton : Swift.Sendable {}
